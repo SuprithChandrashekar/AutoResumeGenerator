@@ -21,7 +21,7 @@ const AppState = {
   // Load QEBradenHill font
   await Utils.loadFontFace(
     'QEBradenHill',
-    'https://www.quantumenterprises.co.uk/handwriting-fonts/fontvault/QEBradenHill.ttf'
+    'fonts/QEBradenHill.ttf'
   );
 
   // Initialize all modules
