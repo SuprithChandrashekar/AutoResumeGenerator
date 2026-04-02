@@ -93,6 +93,10 @@ const PdfExport = (() => {
     if (btn) {
       btn.addEventListener('click', generatePDF);
     }
+    const printBtn = document.getElementById('print-preview');
+    if (printBtn) {
+      printBtn.addEventListener('click', () => window.print());
+    }
   }
 
   return { init, generatePDF };

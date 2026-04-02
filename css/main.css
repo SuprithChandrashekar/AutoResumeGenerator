@@ -185,3 +185,50 @@ body {
   background: #aaa;
   border-radius: 4px;
 }
+
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+  }
+  
+  #toolbar,
+  #input-panel,
+  #preview-header,
+  #render-area {
+    display: none !important;
+  }
+  
+  #workspace, #preview-panel, #pages-container {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .page {
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    page-break-after: always;
+    break-after: page;
+  }
+  
+  .page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+  
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
