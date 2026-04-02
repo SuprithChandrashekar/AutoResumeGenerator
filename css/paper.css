@@ -144,7 +144,15 @@
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
   page-break-inside: avoid;
+}
+
+.page-content-area code {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
 }
 
 /* Ensure the element immediately following a code block stays close to act like attached output */
