@@ -31,20 +31,23 @@ const Renderer = (() => {
   }
 
   /**
-   * Render math with MathJax and apply ink color to CHTML.
+   * Render math with MathJax and apply ink color to SVG output.
    */
   async function renderMath(container, inkColor) {
     if (!window.MathJax || !MathJax.typesetPromise) {
-      // MathJax not loaded yet — skip
       return;
     }
 
     await MathJax.typesetPromise([container]);
 
-    // Tint MathJax CHTML elements to match ink color
+    // Tint and add subtle handwriting jitter per equation
     const mathElements = container.querySelectorAll('mjx-container');
     mathElements.forEach(el => {
       el.style.color = inkColor;
+      // Per-equation random rotation and vertical shift for handwritten feel
+      const rotation = (Math.random() - 0.5) * 0.8;
+      const yShift = (Math.random() - 0.5) * 0.6;
+      el.style.transform = `rotate(${rotation}deg) translateY(${yShift}px)`;
     });
   }
 

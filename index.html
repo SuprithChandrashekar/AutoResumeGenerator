@@ -29,45 +29,25 @@
   </style>
 
   <!-- MathJax Config + Load -->
-  <style>
-    /* Force MathJax CHTML output to inherit our surrounding custom font */
-    mjx-container, mjx-container * {
-      font-family: inherit !important;
-    }
-  </style>
   <script>
     window.MathJax = {
       tex: {
         inlineMath: [['\\(', '\\)']],
         displayMath: [['\\[', '\\]']],
       },
-      chtml: {
-        matchFontHeight: false // Prevents weird scaling on custom handwriting fonts
+      svg: {
+        fontCache: 'local'
       },
       startup: {
         ready: function () {
           MathJax.startup.defaultReady();
-          
-          MathJax.startup.document.inputJax[0].mmlFilters.add((args) => {
-            const walkTree = (node) => {
-              if (!node) return;
-              if (node.isKind('mi') || node.isKind('mn')) {
-                node.attributes.set('mathvariant', 'normal');
-              }
-              if (node.childNodes && node.childNodes.length > 0) {
-                for (const child of node.childNodes) walkTree(child);
-              }
-            };
-            walkTree(args.data);
-          });
-
           window.mathJaxReady = true;
           document.dispatchEvent(new Event('mathjax-ready'));
         }
       }
     };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 

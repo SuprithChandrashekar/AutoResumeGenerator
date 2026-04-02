@@ -121,6 +121,15 @@
   fill: currentColor;
 }
 
+/* Handwriting-feel for SVG math output */
+mjx-container[jax="SVG"] {
+  opacity: 0.93;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  margin: 0.6em auto;
+}
+
 /* ===== Embedded Images ===== */
 .page-content-area img.embedded-image {
   max-width: 100%;
