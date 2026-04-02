@@ -52,11 +52,25 @@ const Pagination = (() => {
         else testBlock.textContent = lines.slice(0, mid).join('\n');
         
         const h = measureElementHeight(testBlock, containerWidth);
-        if (h <= availableHeight) {
+        // Reduce available height safely to prevent vertical bound overflow
+        if (h <= availableHeight - 15) {
           low = mid;
         } else {
           high = mid - 1;
         }
+      }
+
+      // Ruleset: Enforce minimum lines on page to prevent orphans/widows
+      const MIN_LINES = 4;
+      const remainderLines = lines.length - low;
+
+      if (remainderLines > 0 && remainderLines < MIN_LINES) {
+        low = Math.max(0, lines.length - MIN_LINES);
+      }
+
+      // If we can't meet the MIN_LINES requirement without leaving the first part empty
+      if (low < MIN_LINES && availableHeight < containerWidth) { // loosely guess we aren't at the top of a page
+        return { firstPart: null, remainder: block.cloneNode(true) };
       }
 
       if (low === 0) return { firstPart: null, remainder: block.cloneNode(true) };
@@ -187,9 +201,15 @@ const Pagination = (() => {
             if (firstPart) {
               currentContent.appendChild(firstPart);
               usedHeight += measureElementHeight(firstPart, contentWidth);
+            } else if (usedHeight === 0) {
+              // Forced addition (unsplittable block that's too tall) to prevent infinite loop
+              currentContent.appendChild(remainder.cloneNode(true));
+              usedHeight += measureElementHeight(remainder, contentWidth);
+              remaining = null;
+              break;
             }
 
-            if (remainder) {
+            if (remainder && remaining !== null) {
               pages.push(currentPage);
               currentPage = PaperManager.createPageElement(appState);
               currentContent = currentPage.querySelector('.page-content-area');
