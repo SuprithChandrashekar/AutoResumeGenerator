@@ -112,8 +112,21 @@ body {
   flex-direction: column;
   width: 40%;
   min-width: 300px;
-  border-right: 1px solid #ccc;
   background: #fff;
+}
+
+#panel-resizer {
+  width: 8px;
+  background: #ececec;
+  cursor: col-resize;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+#panel-resizer:hover, #panel-resizer.active {
+  background: #d4d4d4;
 }
 
 #text-input {
@@ -189,7 +202,8 @@ body {
 @media print {
   @page {
     margin: 0.1in;
-  
+  }
+
   body, html {
     margin: 0;
     padding: 0;
@@ -198,6 +212,7 @@ body {
   
   #toolbar,
   #input-panel,
+  #panel-resizer,
   #preview-header,
   #render-area {
     display: none !important;
