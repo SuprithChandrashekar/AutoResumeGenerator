@@ -26,8 +26,8 @@ const Pagination = (() => {
    * Returns { firstPart: Node|null, remainder: Node|null }.
    */
   function splitBlock(block, availableHeight, containerWidth) {
-    // For non-text blocks (images, math), don't split
-    if (block.tagName === 'IMG' || block.classList.contains('math-block')) {
+    // For non-text blocks (images, math, code), don't split
+    if (block.tagName === 'IMG' || block.classList.contains('math-block') || block.tagName === 'PRE') {
       return { firstPart: null, remainder: block.cloneNode(true) };
     }
 
@@ -104,10 +104,12 @@ const Pagination = (() => {
       const block = blocks[i];
       const blockHeight = measureElementHeight(block, contentWidth);
 
-      // Check for auto page break on Problem headings (e.g. ### Problem 1)
+      // Check for auto page break on code blocks
       let forceNewPage = false;
-      if (appState.autoPageBreak && usedHeight > 0) {
-        if (block.tagName.toLowerCase().match(/^h[1-6]$/)) {
+      if (usedHeight > 0) {
+        if (block.tagName === 'PRE') {
+          forceNewPage = true;
+        } else if (appState.autoPageBreak && block.tagName.toLowerCase().match(/^h[1-6]$/)) {
           if (block.textContent.trim().toLowerCase().includes('problem')) {
             forceNewPage = true;
           }

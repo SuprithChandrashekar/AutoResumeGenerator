@@ -128,3 +128,31 @@
   margin: 0.5em 0;
   display: block;
 }
+
+/* ===== Code Blocks (Markdown Box & attached output) ===== */
+.page-content-area pre {
+  display: block;
+  background: #fdfdfd;
+  color: #333;
+  padding: 1.2em;
+  margin: 1em 0;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  page-break-inside: avoid;
+}
+
+/* Ensure the element immediately following a code block stays close to act like attached output */
+.page-content-area pre + * {
+  margin-top: -0.5em;
+  padding-left: 0.5em;
+  border-left: 4px solid #acc1da;
+  background: rgba(172, 193, 218, 0.1);
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
